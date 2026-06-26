@@ -459,9 +459,16 @@ def update_cmp_one_by_one(sheet, stock_symbols, start_row=4):
             if data.empty:
                 print(f"No data fetched for {stock}. Skipping.")
                 continue
-            cmp = float(data['Close'].iloc[-1].item())
+            close_series = data['Close'].dropna()
+            if close_series.empty:
+                print(f"No valid CMP for {stock}. Skipping.")
+                continue
+            cmp = float(close_series.iloc[-1].item())
+            if pd.isna(cmp):
+                print(f"CMP is NaN for {stock}. Skipping.")
+                continue
             row_index = start_row + i
-            sheet.update(f'C{row_index}', [[cmp]])  # Assuming CMP is in column C
+            sheet.update(f'C{row_index}', [[cmp]])
             print(f"{stock} CMP updated: {cmp}")
         except Exception as e:
             print(f"Error fetching CMP for {stock}: {e}")

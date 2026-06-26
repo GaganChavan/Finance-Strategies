@@ -355,7 +355,14 @@ def update_cmp_one_by_one(sheet, stock_symbols, usd_inr_rate):
             if data.empty:
                 print(f"No data for {stock}. Skipping.")
                 continue
-            cmp_raw = float(data['Close'].iloc[-1].item())
+            close_series = data['Close'].dropna()
+            if close_series.empty:
+                print(f"No valid CMP for {stock}. Skipping.")
+                continue
+            cmp_raw = float(close_series.iloc[-1].item())
+            if pd.isna(cmp_raw):
+                print(f"CMP is NaN for {stock}. Skipping.")
+                continue
             if is_international:
                 cmp_inr = round(cmp_raw * usd_inr_rate, 2)
                 print(f"{stock}: ${cmp_raw:.2f} × ₹{usd_inr_rate:.2f} = ₹{cmp_inr:.2f}")
