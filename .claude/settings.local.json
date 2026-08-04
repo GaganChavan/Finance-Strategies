@@ -9,7 +9,17 @@
       "WebFetch(domain:dhan.co)",
       "WebFetch(domain:zerodha.com)",
       "WebFetch(domain:downstox.com)",
-      "Bash(git remote *)"
+      "Bash(git remote *)",
+      "Bash(chmod +x *)",
+      "Bash(pip3 show *)",
+      "Bash(streamlit run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8502)",
+      "Read(//tmp/**)",
+      "Bash(pkill -f \"streamlit run etf_efficient_global_backtest.py\")",
+      "Bash(curl -s -L -A \"Mozilla/5.0\" \"https://archives.nseindia.com/content/indices/ind_nifty500list.csv\" -o /private/tmp/claude-501/-Users-gagankumarchavan-Gagan-ETF/0f4cc6bd-a525-42cb-ab50-53e78f82b52b/scratchpad/nifty500.csv --max-time 20)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(lsof -i :8501 -sTCP:LISTEN)",
+      "Bash(pkill -f \"streamlit run backtest_app.py\")"
     ]
   }
 }
