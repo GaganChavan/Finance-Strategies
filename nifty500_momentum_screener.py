@@ -5,7 +5,7 @@ Replicates the Chartink screener: a stock qualifies when, on the SAME day,
 ALL of the following just crossed above their threshold:
   - Daily RSI(14)                      crosses above 65
   - Daily Williams %R(140)             crosses above -20
-  - Daily CCI(Daily High, 20)          crosses above 65
+  - Daily CCI(Daily High, 200)         crosses above 100
 
 Run this once per trading day after market close. Matching symbols (with
 CMP, indicator values, and a suggested +5% target) are appended to the
@@ -32,8 +32,8 @@ RSI_PERIOD = 14
 RSI_LEVEL  = 65.0
 WR_PERIOD  = 140
 WR_LEVEL   = -20.0
-CCI_PERIOD = 20
-CCI_LEVEL  = 65.0
+CCI_PERIOD = 200
+CCI_LEVEL  = 100.0
 
 TARGET_PCT = 0.05   # suggested take-profit shown in the sheet (informational only)
 
@@ -268,7 +268,7 @@ def extract_ohlc(df, ticker):
 def download_individual(ticker, symbol):
     for attempt in range(MAX_RETRIES):
         try:
-            df = yf.download(ticker, period="1y", interval="1d", progress=False)
+            df = yf.download(ticker, period="2y", interval="1d", progress=False)
             if not df.empty:
                 return df
             print(f"  ⚠️  {symbol} ({ticker}): empty response")
@@ -369,9 +369,9 @@ for b_start in range(0, len(symbols), BATCH_SIZE):
     print(f"\n⬇️  Batch {b_num}/{total_batches} — downloading {len(batch_tickers)} tickers...")
     try:
         if len(batch_tickers) == 1:
-            batch_df = yf.download(batch_tickers[0], period="1y", interval="1d", progress=False)
+            batch_df = yf.download(batch_tickers[0], period="2y", interval="1d", progress=False)
         else:
-            batch_df = yf.download(batch_tickers, period="1y", interval="1d", progress=False)
+            batch_df = yf.download(batch_tickers, period="2y", interval="1d", progress=False)
         print(f"   Batch {b_num} downloaded — {len(batch_df)} daily rows")
     except Exception as e:
         print(f"   ⚠️  Batch {b_num} failed ({e}) — will fall back to individual downloads")
