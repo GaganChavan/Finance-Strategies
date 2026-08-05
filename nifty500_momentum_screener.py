@@ -345,7 +345,7 @@ if WORKSHEET_NAME not in existing_ws:
 sheet = spreadsheet.worksheet(WORKSHEET_NAME)
 
 HEADER = ["Scan Date", "Symbol", "CMP", "RSI(14)", "Williams %R(140)",
-          "CCI(High,20)", f"Target (+{TARGET_PCT*100:.0f}%)"]
+          "CCI(High,200)", f"Target (+{TARGET_PCT*100:.0f}%)"]
 if sheet.row_values(1) != HEADER:
     sheet.update(range_name="A1", values=[HEADER])
     print("  Header written.")
